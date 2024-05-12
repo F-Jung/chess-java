@@ -16,7 +16,9 @@ public class UI {
 	public static final String ANSI_PURPLE = "\u001B[35m";
 	public static final String ANSI_CYAN = "\u001B[36m";
 	public static final String ANSI_WHITE = "\u001B[37m";
-
+	public static final String ANSI_BOLD = "\u001b[1m";
+	
+	
 	public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
 	public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
@@ -25,29 +27,39 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+	public static final String ANSI_BROWN_BACKGROUND = "\u001B[48;5;130m";
+	public static final String ANSI_LIGHT_YELLOW_BACKGROUND = "\u001B[48;5;226m";
 	
 	public static void printBoard(ChessPiece[][] pieces) {
-		for (int i=0; i<pieces.length; i++) {
-			System.out.print((8-i)+" ");
-			for (int j=0; j<pieces.length; j++) {
-				printPiece(pieces[i][j]);
+		System.out.println();
+		for (int i = 0; i < pieces.length; i++) {
+			System.out.print((8 - i) + " ");
+			for (int j = 0; j < pieces.length; j++) {
+
+				if ((i + j) % 2 == 0) {
+					System.out.print(  ANSI_BROWN_BACKGROUND + ANSI_BOLD 
+							 + displayPiece(pieces[i][j])+ ANSI_RESET );
+				} else {
+					System.out.print( ANSI_BOLD + displayPiece(pieces[i][j])+ ANSI_RESET );					
+				}
 			}
 			System.out.println();
 		}
-		System.out.println("  a b c d e f g h");
+		System.out.println();
+		System.out.println("   a b c d e f g h");
 	}
 
-	private static void printPiece(ChessPiece piece) {
-    	if (piece == null) {
-            System.out.print("-");
-        }
-        else {
-            if (piece.getColor() == Color.WHITE) {
-                System.out.print(ANSI_WHITE + piece + ANSI_RESET);
-            }
-            else {
-                System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
-            }
-        }
+	private static String displayPiece(ChessPiece piece) {
+		String str;
+		if (piece == null) {
+			str = "  ";
+		} else {
+			if (piece.getColor() == Color.WHITE) {
+				str = ANSI_WHITE + piece;
+			} else {
+				str = ANSI_YELLOW + piece;
+			}
+		}
+		return str;
 	}
 }

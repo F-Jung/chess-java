@@ -5,7 +5,7 @@ public class Board {
 	private int rows;
 	private int columns;
 	private Piece[][] pieces;
-	
+
 	public Board(int rows, int columns) {
 		if (rows<1 || columns <1) {
 			throw new BoardException("Error creating board:"
@@ -14,6 +14,7 @@ public class Board {
 		this.rows = rows;
 		this.columns = columns;
 		pieces = new Piece[rows][columns];
+	
 	}
 
 	public int getRows() {
