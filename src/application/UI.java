@@ -6,11 +6,12 @@ import java.util.Scanner;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
+import game_board.Position;
 
 public class UI {
 
 	// https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
-
+	
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
 	public static final String ANSI_RED = "\u001B[31m";
@@ -75,15 +76,58 @@ public class UI {
 		System.out.println("   a b c d e f g h");
 	}
 
+	public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves, ChessPosition source) {
+		System.out.println();
+		int n = pieces.length;
+		String[][] backgroundColor = new String[n][n];
+		ChessPiece sourcePiece = pieces[source.toPosition().getRow()][source.toPosition().getColumn()];
+
+		for (int i = 0; i < n; i++) {
+			System.out.print((8 - i) + " ");
+			for (int j = 0; j < n; j++) {
+
+				if ((i + j) % 2 == 0) {
+
+					backgroundColor[i][j] = possibleMoves[i][j] ? "\u001B[48;5;33m" : ANSI_BROWN_BACKGROUND;
+					
+					if (pieces[i][j] != null &&  possibleMoves[i][j] ) {
+						if (pieces[i][j].getColor() != sourcePiece.getColor()) {
+							backgroundColor[i][j] = "\u001b[48;2;230;0;0m";
+						}
+					}
+					
+					if (i == source.toPosition().getRow() && j == source.toPosition().getColumn()) {
+						backgroundColor[i][j] = ANSI_GREEN_BACKGROUND;
+					}
+					System.out.print(backgroundColor[i][j] + displayPiece(pieces[i][j]) + ANSI_RESET);
+					
+				} else {
+					backgroundColor[i][j] = possibleMoves[i][j] ? ANSI_BLUE_BACKGROUND : "\u001b[48;2;128;0;0m";
+					
+					if (pieces[i][j] != null &&  possibleMoves[i][j] ) {
+						if (pieces[i][j].getColor() != sourcePiece.getColor()) {
+							backgroundColor[i][j] = "\u001b[48;2;230;0;0m";
+						}
+					}	
+					System.out.print(backgroundColor[i][j] + displayPiece(pieces[i][j]) + ANSI_RESET);
+				}
+			}
+			System.out.println();
+		}
+		System.out.println();
+		System.out.println("   a b c d e f g h");
+	}
+	
 	private static String displayPiece(ChessPiece piece) {
 		String str;
 		if (piece == null) {
 			str = "  ";
 		} else {
 			if (piece.getColor() == Color.WHITE) {
-				str = ANSI_WHITE + piece;
+				str =  ANSI_WHITE + ANSI_BOLD + piece;
+						 
 			} else {
-				str = ANSI_YELLOW + piece;
+				str = ANSI_YELLOW + ANSI_BOLD + piece;
 			}
 		}
 		return str;

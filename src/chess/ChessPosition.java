@@ -23,8 +23,8 @@ public class ChessPosition {
 	public int getRow() {
 		return row;
 	}
-	
-	protected Position toPosition() {
+	//modified from protected to public
+	public Position toPosition() {
 		return new Position(8-row, column-'a');
 	}
 	

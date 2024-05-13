@@ -21,12 +21,21 @@ public class Program {
 				UI.printBoard(chessMatch.getPieces());
 				System.out.println();
 				System.out.print("Source: ");
+				//System.out.print( "\u001B[32m" + "Source: " + "\u001B[0m");
 				ChessPosition source = UI.readChessPosition(sc);
 				
+				boolean[][] possibleMoves = chessMatch.possibleMoves(source); 
+				UI.clearScreen();
+				UI.printBoard(chessMatch.getPieces(), possibleMoves, source);
+				System.out.println();
+				System.out.print("Source: " + source);
+				//System.out.print("\u001B[32m" + "Source: " + "\u001B[0m" + source);
 				System.out.println();
 				System.out.print("Target: ");
+				//System.out.print("\u001B[38;5;33m" + "Target: " + "\u001B[0m");
 				ChessPosition target = UI.readChessPosition(sc);
 				
+
 				ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
 			}
 			catch (ChessException e) {
