@@ -34,8 +34,10 @@ public class UI {
 	public static final String ANSI_BROWN_BACKGROUND = "\u001B[48;5;130m";
 	public static final String ANSI_LIGHT_YELLOW_BACKGROUND = "\u001B[48;5;226m";
 	
+	
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console
 	public static void clearScreen() {
-		System.out.print("\033[H\033\2J");
+		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 	
