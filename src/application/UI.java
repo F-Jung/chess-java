@@ -50,8 +50,8 @@ public class UI {
 			return new ChessPosition(column, row);
 		}
 		catch (RuntimeException e) {
-			throw new InputMismatchException("Error reading ChessPosition: "
-					+ "valid values range from a1 to h8.");
+			throw new InputMismatchException("Invalid ChessPosition. "
+					+ "Valid values range from a1 to h8.");
 		}
 	}
 	
