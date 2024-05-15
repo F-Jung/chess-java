@@ -10,7 +10,6 @@ import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
-import game_board.Position;
 
 public class UI {
 
@@ -86,6 +85,9 @@ public class UI {
 		printCapturedPieces(captured);
 		System.out.println();
 		System.out.println("Turn "+ chessMatch.getTurn()+": "+chessMatch.getCurrentPlayer() + "'s move");
+		if (chessMatch.getCheck()) {
+			System.out.println("CHECK!");
+		}
 	}
 	
 	public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves, ChessPosition source) {
@@ -155,7 +157,7 @@ public class UI {
 		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK)
 				.collect(Collectors.toList());
 		System.out.println("Captured Pieces");
-		//System.out.println();
+
 		//System.out.println(ANSI_WHITE + Arrays.toString(white.toArray()) + ANSI_RESET);
 		//System.out.println(ANSI_YELLOW + Arrays.toString(black.toArray()) + ANSI_RESET);
 		
@@ -172,9 +174,7 @@ public class UI {
 		System.out.println(ANSI_WHITE + capturedWhite + ANSI_RESET);
 	} 
 	
-//	System.out.println(ANSI_WHITE + x + ANSI_RESET );
-	
-//	System.out.println(ANSI_YELLOW + x + ANSI_RESET );
+
 	
 	
 	
