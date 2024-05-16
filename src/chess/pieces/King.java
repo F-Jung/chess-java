@@ -1,19 +1,28 @@
 package chess.pieces;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Color;
 import game_board.Board;
 import game_board.Position;
 
 public class King extends ChessPiece {
-
-	public King(Board board, Color color) {
+	
+	private ChessMatch chessMatch;
+	
+	public King(Board board, Color color, ChessMatch chessMatch) {
 		super(board, color);
+		this.chessMatch = chessMatch;
 	}
 
 	@Override 
 	public String toString() {
 		return " K";
+	}
+	
+	private boolean testRookCastling(Position position) {
+		ChessPiece p = (ChessPiece)getBoard().piece(position);
+		return p != null & p instanceof Rook && p.getColor() == getColor() && p.getMoveCount() == 0;  
 	}
 	
 	private boolean canMove(Position position) {
@@ -73,7 +82,52 @@ public class King extends ChessPiece {
 		if (getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] = true;
 		}
-
+		
+		//#specialmove Castling
+		if (getMoveCount() == 0 && !chessMatch.getCheck()) {
+			//#specialmove castling Kingside Rook
+			Position p0 = new Position(position.getRow(), position.getColumn() + 3);
+			if (testRookCastling(p0)) {
+				Position p1 = new Position(position.getRow(), position.getColumn() + 1);
+				Position p2 = new Position(position.getRow(), position.getColumn() + 2);
+				if (getBoard().piece(p1) == null && getBoard().piece(p2) == null && 
+						!chessMatch.isPositionUnderThreat(getColor(), p1) && 
+						!chessMatch.isPositionUnderThreat(getColor(), p2)) {
+					mat [position.getRow()][position.getColumn() + 2] = true;
+				}
+			}
+			//#specialmove castling Queenside Rook
+			p0.setValues(position.getRow(), position.getColumn() - 4);
+			if (testRookCastling(p0)) {
+				Position p1 = new Position(position.getRow(), position.getColumn() - 1);
+				Position p2 = new Position(position.getRow(), position.getColumn() - 2);
+				Position p3 = new Position(position.getRow(), position.getColumn() - 3);
+				if (getBoard().piece(p1) == null && getBoard().piece(p2) == null &&
+						getBoard().piece(p3) == null && 
+						!chessMatch.isPositionUnderThreat(getColor(), p1) &&
+						!chessMatch.isPositionUnderThreat(getColor(), p2) && 
+						!chessMatch.isPositionUnderThreat(getColor(), p3)) {
+					mat[position.getRow()][position.getColumn() - 2] = true;
+				}
+			}
+		}
 		return mat;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
