@@ -1,6 +1,5 @@
 package application;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -57,7 +56,6 @@ public class UI {
 					+ "Valid values range from a1 to h8.");
 		}
 	}
-	
 	
 	public static void printBoard(ChessPiece[][] pieces) {
 		System.out.println();
